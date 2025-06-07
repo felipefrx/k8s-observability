@@ -1,0 +1,40 @@
+grafana.ini:
+  auth.ldap:
+    allow_sign_up: true
+    enabled: false
+    skip_org_role_sync: true
+  users:
+    auto_assign_org_role: Editor
+ingress:
+  enabled: false
+  hosts:
+  - monitoring.com.br
+  ingressClassName: nginx
+  path: /
+  pathType: Prefix
+grafana.ini:
+  dataproxy:
+    timeout = 180
+ldap:
+  config: |-
+  enabled: false
+  existingSecret: ""
+persistence:
+  accessModes:
+  - ReadWriteOnce
+  annotations: null
+  enabled: false
+  finalizers: null
+  size: 10Gi
+  storageClassName: gp3
+  subPath: null
+  type: pvc
+initChownData:
+  enabled: false
+resources: 
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

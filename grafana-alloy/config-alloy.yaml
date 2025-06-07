@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-config
+data: 
+  alloy.config: |-
+    logging {
+      level = "debug"
+      format = "logfmt"
+    }
+    loki.write "default" {
+      endpoint {
+        url = "http://loki.loki:3100/loki/api/v1/push"
+      }
+    }

@@ -1,0 +1,93 @@
+backend:
+  replicas: 0
+chunksCache:
+  enabled: false
+deploymentMode: SingleBinary
+gateway:
+  enabled: false
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 30m
+      memory: 30Mi
+loki:
+  auth_enabled: false
+  commonConfig:
+    replication_factor: 1
+  limits_config:
+    cardinality_limit: 200000
+    ingestion_burst_size_mb: 500
+    ingestion_rate_mb: 10000
+    max_entries_limit_per_query: 500000
+    max_label_name_length: 10240
+    max_label_names_per_series: 300
+    max_label_value_length: 20480
+    per_stream_rate_limit: 256M
+    per_stream_rate_limit_burst: 512M
+    retention_period: 144h
+  compactor:
+    retention_enabled: true
+    delete_request_store: filesystem
+    compaction_interval: 10m
+    retention_delete_delay: 2h
+    retention_delete_worker_count: 150
+    working_directory: /var/loki/compactor
+  table_manager:
+    retention_deletes_enabled: true
+    retention_period: 24h
+  schemaConfig:
+    configs:
+    - from: "2024-09-16"
+      index:
+        period: 24h
+        prefix: index_
+      object_store: filesystem
+      schema: v13
+      store: tsdb
+  server:
+    grpc_server_max_recv_msg_size: 104857600
+    grpc_server_max_send_msg_size: 104857600
+  storage:
+    type: filesystem
+  containerSecurityContext:
+    readOnlyRootFilesystem: false
+lokiCanary:
+  enabled: false
+read:
+  replicas: 0
+resultsCache:
+  enabled: false
+singleBinary:
+  persistence:
+    enabled: false
+    mountPath: /var/loki
+    readOnly: false
+    size: 30Gi
+    storageClass: longhorn
+  podSecurityContext:
+    fsGroup: 10001
+    runAsGroup: 10001
+    runAsUser: 10001
+  readOnly: false
+  replicas: 1
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 30m
+      memory: 100Mi
+  extraVolumes:
+    - name: storage
+      mountPath: /var/loki
+      readOnly: false
+  extraVolumeMounts:
+    - name: storage
+      mountPath: /var/loki
+      readOnly: false
+test:
+  enabled: false
+write:
+  replicas: 0

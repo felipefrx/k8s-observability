@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-generator
+  labels:
+    app: log-generator
+spec:
+  containers:
+  - name: logger
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args:
+      - while true; do
+          echo "$(date) - log de teste gerado pelo container";
+          sleep 5;
+        done
+    resources:
+      limits:
+        memory: "64Mi"
+        cpu: "50m"
