@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ubuntu-deployment
-  namespace: ubuntu
+  name: ubuntu
   labels:
     app: ubuntu
 spec:
@@ -19,3 +18,15 @@ spec:
       - name: ubuntu
         image: ubuntu
         command: ["sleep", "123456"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app: ubuntu
+spec:
+  selector:
+    app:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
