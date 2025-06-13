@@ -43,7 +43,7 @@ helm repo add linkerd-edge https://helm.linkerd.io/edge
 helm upgrade --install linkerd-crds linkerd-edge/linkerd-crds -n linkerd --create-namespace
 
 helm upgrade --install linkerd-control-plane \
-  -n linkerd \
+  -n linkerd --create-namespace \
   --set-file identityTrustAnchorsPEM=ca.crt \
   --set-file identity.issuer.tls.crtPEM=issuer.crt \
   --set-file identity.issuer.tls.keyPEM=issuer.key \
